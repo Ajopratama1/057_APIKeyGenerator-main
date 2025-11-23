@@ -1,0 +1,120 @@
+<%- include('../partials/header', { title: title }) %>
+
+<style>
+body {
+ background-color: #0d1a26;
+ color: #c0c0c0;
+}
+
+  .container-fluid {
+    padding: 30px; 
+  }
+ h1 {
+ color: #ffbf00;
+ border-bottom: 2px solid #36454f; 
+    padding-bottom: 10px;
+    margin-bottom: 30px !important;
+    font-weight: 700; 
+  }
+ .card {
+ background-color: #1c2e40;
+ border: 1px solid #36454f;
+ border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  }
+ .table {
+ color: #ffffff;
+  }
+
+ .table thead {
+   background-color: #36454f !important;
+    color: #ffbf00;
+    font-weight: 600; 
+    letter-spacing: 0.5px;
+  }
+ .table tbody tr:hover {
+ background-color: #2a415a !important; 
+ cursor: pointer;
+ }
+
+.badge.bg-success {
+ background-color: #00704a !important; 
+ color: #ffffff;
+  padding: 6px 10px;
+ font-weight: 700;
+ }
+ .badge.bg-danger {
+ background-color: #8b0000 !important;
+ color: #ffffff;
+ padding: 6px 10px;
+ font-weight: 700;
+ }
+
+ .btn-primary {
+    background-color: #ffbf00;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+ padding: 8px 15px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    text-transform: uppercase;
+  }
+ .btn-primary:hover {
+ background-color: #e6a700; 
+ transform: translateY(-1px); 
+}
+</style>
+
+<div class="container-fluid">
+ <h1 class="mb-4">🔑 Daftar API Keys</h1>
+
+ <div class="card shadow-lg">
+ <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Nama Lengkap</th>
+              <th scope="col">Email</th>
+              <th scope="col">Status</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <% keys.forEach(key => { %>
+              <tr>
+                <td><%= key.first_name %> <%= key.last_name %></td>
+                <td><%= key.email %></td>
+                <td>
+                  <% if (key.status === 'valid') { %>
+                    <span class="badge bg-success">Valid</span>
+                  <% } else { %>
+                    <span class="badge bg-danger">Invalid</span>
+                  <% } %>
+                </td>
+                <td><%= new Date(key.end_date).toLocaleDateString('id-ID') %></td>
+                <td>
+                  <a href="/admin/detail/<%= key.id %>" class="btn btn-sm btn-primary">
+                    Lihat Detail
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
+
+            <% if (keys.length === 0) { %>
+              <tr>
+                <td colspan="5" class="text-center p-4">Belum ada API Key yang dibuat.</td>
+              </tr>
+            <% } %>
+
+          </tbody>
+        </table>
+      </div>
+      </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
