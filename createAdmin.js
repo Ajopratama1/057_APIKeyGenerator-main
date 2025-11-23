@@ -9,11 +9,11 @@ const ADMIN_PASSWORD = "password123";
 
 // Buat koneksi
 const connection = mysql.createConnection({
-  host: dbConfig.HOST,
-  user: dbConfig.USER,
-  password: dbConfig.PASSWORD,
-  database: dbConfig.DB,
-  port: dbConfig.PORT
+  host: dbConfig.HOST || process.env.DB_HOST || 'localhost',
+  user: dbConfig.USER || process.env.DB_USER || 'root',
+  password: dbConfig.PASSWORD || process.env.DB_PASSWORD || '',
+  database: dbConfig.DB || process.env.DB_NAME || process.env.DB_DATABASE || 'pws_db',
+  port: dbConfig.PORT || (process.env.DB_PORT ? Number(process.env.DB_PORT) : 3309)
 });
 
 connection.connect(async (err) => {
