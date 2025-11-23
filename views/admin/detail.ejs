@@ -88,6 +88,16 @@ background-color: #0d1a26;
  }
 </style>
 
+<%
+// Safety: pastikan detail ada agar template tidak crash
+if (!detail || typeof detail !== 'object') { %>
+  <div class="container-fluid">
+    <div class="alert alert-danger mt-4">Detail tidak ditemukan atau terjadi error. Kembali ke <a href="/admin/dashboard">dashboard</a>.</div>
+  </div>
+  <%- include('../partials/footer') %>
+  <% return; %>
+<% } %>
+
 <div class="container-fluid">
   <div class="row">
  <div class="col-md-8">
@@ -98,17 +108,17 @@ background-color: #0d1a26;
   <div class="card-body">
     <ul class="list-group list-group-flush">
    <li class="list-group-item">
-     <strong>First Name:</strong> <%= detail.first_name %>
+     <strong>First Name:</strong> <%= detail.first_name || '-' %>
    </li>
    <li class="list-group-item">
-     <strong>Last Name:</strong> <%= detail.last_name %>
+     <strong>Last Name:</strong> <%= detail.last_name || '-' %>
    </li>
    <li class="list-group-item">
-     <strong>Email:</strong> <%= detail.email %>
+     <strong>Email:</strong> <%= detail.email || '-' %>
    </li>
    <li class="list-group-item">
      <strong>API Key:</strong>
-     <pre class="p-2 rounded mt-1"><code><%= detail.api_key %></code></pre>
+     <pre class="p-2 rounded mt-1"><code><%= detail.api_key || '-' %></code></pre>
    </li>
    <li class="list-group-item d-flex justify-content-between align-items-center">
      <strong>Status:</strong>
@@ -121,10 +131,10 @@ background-color: #0d1a26;
      </div>
    </li>
    <li class="list-group-item">
-     <strong>Start Date:</strong> <%= new Date(detail.start_date).toLocaleDateString('id-ID') %>
+     <strong>Start Date:</strong> <%= detail.start_date ? new Date(detail.start_date).toLocaleDateString('id-ID') : '-' %>
    </li>
    <li class="list-group-item">
-     <strong>End Date:</strong> <%= new Date(detail.end_date).toLocaleDateString('id-ID') %>
+     <strong>End Date:</strong> <%= detail.end_date ? new Date(detail.end_date).toLocaleDateString('id-ID') : '-' %>
    </li>
     </ul>
   </div>
